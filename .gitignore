@@ -1,6 +1,6 @@
 # Custom ignores
 config.json
-public/config.json
+public/recom_en.json
 
 
 # Logs
