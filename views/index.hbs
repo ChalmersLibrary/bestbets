@@ -1,0 +1,145 @@
+<main id="app" v-cloak>
+  <h1>Best Bets configuration</h1>
+  <form v-on:submit.prevent="save">
+    <label>Title: <input type="text" v-model="title"></label>
+    <fieldset>
+      <legend>Items</legend>
+      <ul>
+        <li v-for="(item, index) in items">
+          <label>Name: <input type="text" v-model="item.name"></label>
+          <label>Link: <input type="url" v-model="item.link"></label>
+          <label>Description: <input type="text" v-model="item.description"></label>
+          <fieldset>
+            <legend>Terms</legend>
+            <ul>
+              <li v-for="(term, index) in item.terms">
+                <label>Term: <input type="text" v-model="term.value"></label> <button type="button" @click="removeTerm(item.terms, index)">Remove</button>
+              </li>
+            </ul>
+            <button type="button" @click="addTerm(item.terms)">Add term</button>
+          </fieldset>
+          <button type="button" @click="removeItem(index)">Remove item</button>
+        </li>
+      </ul>
+      <button type="button" @click="addItem">Add item</button>
+    </fieldset>
+    <button>Save data</button>
+    <a href="config.json" target="_blank">Look at current saved configuration</a>
+  </form>
+</main>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      title: '',
+      items: []
+    },
+    methods: {
+      save: function() {
+        let data = {
+          ebsco: {
+            title: this.title,
+            item: []
+          }
+        };
+
+        let id = 1;
+        for (let i=0; i<this.items.length; i++) {
+          let item = this.items[i];
+          let terms = [];
+          for (let j=0; j<item.terms.length; j++) {
+            terms.push(item.terms[j].value);
+          }
+
+          let realTerms;
+          if (terms.length > 1) {
+            realTerms = terms;
+          } else if (terms.length === 1) {
+            realTerms = terms[0];
+          } else {
+            realTerms = '';
+          }
+
+          data.ebsco.item.push({
+            id: '' + id,
+            name: item.name,
+            link: item.link,
+            description: item.description,
+            terms: {
+              term: realTerms
+            }
+          });
+          id += 1;
+        }
+
+        $.ajax({
+          type: 'POST',
+          url: '/api/config', 
+          data: JSON.stringify(data),
+          contentType: 'application/json'
+        })
+        .done(function (msg) {
+          console.log('Configuration saved.');
+        })
+        .fail(function (jqxhr, textStatus, error) {
+          alert('Failed to save config.');
+        });
+      },
+      addItem: function() {
+        this.items.push({
+          name: '',
+          link: '',
+          description: '',
+          terms: []
+        });
+      },
+      removeItem: function(index) {
+        this.items.splice(index, 1);
+      },
+      addTerm: function(terms) {
+        terms.push({
+          value: ''
+        });
+      },
+      removeTerm: function(terms, index) {
+        terms.splice(index, 1);
+      }
+    }
+  });
+
+  let convertToFormItems = function(items) {
+    let res = [];
+    for (let i=0; i<items.length; i++) {
+      let iterItem = items[i];
+      let terms = [];
+      if (iterItem.terms.term instanceof Array) {
+        for (let j=0; j<items[i].terms.term.length; j++) {
+          terms.push({value:iterItem.terms.term[j]});
+        }
+      } else {
+        terms.push({value:iterItem.terms.term});
+      }
+      res.push({
+        name: iterItem.name,
+        link: iterItem.link,
+        description: iterItem.description,
+        terms: terms
+      });
+    }
+    return res;
+  }
+
+  $.getJSON('/api/config')
+  .done(function (data) {
+    vm.title = data.ebsco.title;
+    vm.items = convertToFormItems(data.ebsco.item);
+  })
+  .fail(function (jqxhr, textStatus, error) {
+    alert('Failed to load config.');
+  });
+</script>
