@@ -1,5 +1,6 @@
 # Custom ignores
 config.json
+public/config.json
 
 
 # Logs
