@@ -9,6 +9,9 @@ var apiRouter = require('./routes/api');
 
 var app = express();
 
+// Store the path to the directory where this file resides.
+baseDir = __dirname;
+
 // Load dev config if suitable.
 if (!process.env.NODE_ENV) {
   var config = require('./config.json');
