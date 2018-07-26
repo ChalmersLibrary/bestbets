@@ -7,10 +7,10 @@ router.get('/config', function(req, res, next) {
   let credentials = auth(req);
 
   if (!credentials || 
-      !process.env.username || 
-      !process.env.password || 
-      credentials.name !== process.env.username || 
-      credentials.pass !== process.env.password) {
+      !process.env.adminUsername || 
+      !process.env.adminPassword || 
+      credentials.name !== process.env.adminUsername || 
+      credentials.pass !== process.env.adminPassword) {
     res.statusCode = 401;
     res.setHeader('WWW-Authenticate', 'Basic realm="Access to Best Bets configuration"');
     res.end('Access denied');
@@ -30,10 +30,10 @@ router.post('/config', function(req, res, next) {
   let credentials = auth(req);
 
   if (!credentials || 
-      !process.env.username || 
-      !process.env.password || 
-      credentials.name !== process.env.username || 
-      credentials.pass !== process.env.password) {
+      !process.env.adminUsername || 
+      !process.env.adminPassword || 
+      credentials.name !== process.env.adminUsername || 
+      credentials.pass !== process.env.adminPassword) {
     res.statusCode = 401;
     res.setHeader('WWW-Authenticate', 'Basic realm="Access to Best Bets configuration"');
     res.end('Access denied');

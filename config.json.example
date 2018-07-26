@@ -1,4 +1,4 @@
 {
-    "username": "user",
-    "password": "hemligt"
+    "adminUsername": "user",
+    "adminPassword": "hemligt"
 }
