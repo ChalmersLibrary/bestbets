@@ -1,3 +1,67 @@
+html, body {
+  background-color: #E2DFD0;
+  color: black;
+  font-size: 16px;
+  font-family: 'Merriweather', serif;
+}
+
+h1 {
+  font-family: 'Noto Sans', sans-serif;
+  color: #606060;
+}
+
 [v-cloak] {
   display: none;
+}
+
+.config__title-label {
+  display: block;
+}
+
+.config__title-input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.config__items-container {
+  margin-bottom: 0.5em;
+  border-color: #ffffff;
+}
+
+.config__items-list {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+.config__item-top-property-label {
+  display: block;
+}
+
+.config__item-top-property-input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.config__item-container {
+  background-color: #DDD1BB;
+  border: black 1px solid;
+  padding: 0.5em;
+}
+
+.config__terms-container {
+  margin-bottom: 0.5em;
+}
+
+.config__terms-list {
+  list-style-type: none;
+  padding-left: 0;
+  padding-bottom: 0.5em;
+}
+
+.config__term-input {
+  width: 30%;
 }

@@ -1,19 +1,19 @@
 <main id="app" v-cloak>
   <h1>Best Bets configuration</h1>
   <form v-on:submit.prevent="save">
-    <label>Title: <input type="text" v-model="title"></label>
-    <fieldset>
+    <label class="config__title-label">Title: <input class="config__title-input" type="text" v-model="title"></label>
+    <fieldset class="config__items-container">
       <legend>Items</legend>
-      <ul>
-        <li v-for="(item, index) in items">
-          <label>Name: <input type="text" v-model="item.name"></label>
-          <label>Link: <input type="url" v-model="item.link"></label>
-          <label>Description: <input type="text" v-model="item.description"></label>
-          <fieldset>
+      <ul class="config__items-list">
+        <li class="config__item-container" v-for="(item, index) in items">
+          <label class="config__item-top-property-label">Name: <input class="config__item-top-property-input" type="text" v-model="item.name"></label>
+          <label class="config__item-top-property-label">Link: <input class="config__item-top-property-input" type="url" v-model="item.link"></label>
+          <label class="config__item-top-property-label">Description: <input class="config__item-top-property-input" type="text" v-model="item.description"></label>
+          <fieldset class="config__terms-container">
             <legend>Terms</legend>
-            <ul>
-              <li v-for="(term, index) in item.terms">
-                <label>Term: <input type="text" v-model="term.value"></label> <button type="button" @click="removeTerm(item.terms, index)">Remove</button>
+            <ul class="config__terms-list">
+              <li class="config__term-container" v-for="(term, index) in item.terms">
+                <input type="text" v-model="term.value" class="config__term-input"> <button type="button" @click="removeTerm(item.terms, index)">Remove</button>
               </li>
             </ul>
             <button type="button" @click="addTerm(item.terms)">Add term</button>
