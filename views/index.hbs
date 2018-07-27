@@ -6,19 +6,27 @@
       <legend>Items</legend>
       <ul class="config__items-list">
         <li class="config__item-container" v-for="(item, index) in items">
-          <label class="config__item-top-property-label">Name: <input class="config__item-top-property-input" type="text" v-model="item.name"></label>
-          <label class="config__item-top-property-label">Link: <input class="config__item-top-property-input" type="url" v-model="item.link"></label>
-          <label class="config__item-top-property-label">Description: <input class="config__item-top-property-input" type="text" v-model="item.description"></label>
-          <fieldset class="config__terms-container">
-            <legend>Terms</legend>
-            <ul class="config__terms-list">
-              <li class="config__term-container" v-for="(term, index) in item.terms">
-                <input type="text" v-model="term.value" class="config__term-input"> <button type="button" @click="removeTerm(item.terms, index)">Remove</button>
-              </li>
-            </ul>
-            <button type="button" @click="addTerm(item.terms)">Add term</button>
-          </fieldset>
-          <button type="button" @click="removeItem(index)">Remove item</button>
+          <template v-if="!item.show">
+            <span class="config__item-toggle" v-on:click="item.show = !item.show">▶️</span>
+            <span v-bind:id="'item-' + index" v-on:click="item.show = !item.show" v-html="'Name: ' + item.name"></span>
+          </template>
+          <template v-else>
+            {{!-- <span v-html="'Show: ' + item.show"></span> --}}
+            <span class="config__item-toggle" v-on:click="item.show = !item.show">🔽</span>
+            <label class="config__item-top-property-label" >Name: <input class="config__item-top-property-input" type="text" v-model="item.name"></label>
+            <label class="config__item-top-property-label">Link: <input class="config__item-top-property-input" type="url" v-model="item.link"></label>
+            <label class="config__item-top-property-label">Description: <input class="config__item-top-property-input" type="text" v-model="item.description"></label>
+            <fieldset class="config__terms-container">
+              <legend>Terms</legend>
+              <ul class="config__terms-list">
+                <li class="config__term-container" v-for="(term, index) in item.terms">
+                  <input type="text" v-model="term.value" class="config__term-input"> <button type="button" @click="removeTerm(item.terms, index)">Remove</button>
+                </li>
+              </ul>
+              <button type="button" @click="addTerm(item.terms)">Add term</button>
+            </fieldset>
+            <button type="button" @click="removeItem(index)">Remove item</button>
+          </template>
         </li>
       </ul>
       <button type="button" @click="addItem">Add item</button>
@@ -93,6 +101,7 @@
       addItem: function() {
         this.items.push({
           name: '',
+          show: true,
           link: '',
           description: '',
           terms: []
@@ -125,6 +134,7 @@
         terms.push({value:iterItem.terms.term});
       }
       res.push({
+        show: false,
         name: iterItem.name,
         link: iterItem.link,
         description: iterItem.description,

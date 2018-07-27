@@ -36,6 +36,10 @@ h1 {
   margin-bottom: 0;
 }
 
+.config__item-toggle {
+  cursor: pointer;
+}
+
 .config__item-top-property-label {
   display: block;
 }
