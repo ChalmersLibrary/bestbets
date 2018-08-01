@@ -1,0 +1,43 @@
+/* Recommender - CSS Document */
+#recommender {
+	border: 1px solid #a3a3a3; padding: 1em; background-color : #F2F2F2;
+	max-height: 200px;overflow: auto;
+}
+
+.recList { list-style-type: none; margin:5px; padding:0px;}
+.recItem { list-style-type: none; padding:1px; }
+
+a.recLink:link, a.recLink:visited , a.recLink :active { text-decoration : none; color:black;}
+a.recLink:hover { text-decoration : underline; color:blue;}
+
+#aToolTip {
+	position: absolute;
+	display: none;
+	z-index: 50000;
+}
+#aToolTip .aToolTipContent {
+	position:relative;
+	margin:0;
+	padding:0;
+}
+.toolTipTheme{
+	max-width:400px;
+	border:1px solid #CCC;
+	background-color:#FFF;
+	color:#000;
+	padding:3px;
+}
+
+#recomLoader{
+	background-image:url('https://widgets.ebscohost.com/prod/simplekey/recom/loader.gif');
+	background-color:#d3d3d3;
+	height:25px;
+	background-position:center;
+	background-repeat:no-repeat;
+}
+
+.branding-container #recommender {
+    text-align: left;
+    width: 50%;
+    margin-left: 25%;
+}
